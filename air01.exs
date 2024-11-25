@@ -1,21 +1,22 @@
-# Split en fonction
 defmodule Exercice do
   def split(string, delimiter) do
     do_split(string, delimiter, <<>>, [])
   end
 
-  defp do_split(<<>>, _delimiter, part, accumulator) do
-    Enum.reverse([part | accumulator])
+  defp do_split(<<>>, _delimiter, part, acc) do
+    Enum.reverse([part | acc])
   end
 
-  defp do_split(string, delimiter, part, accumulator)
-       when binary_part(string, 0, byte_size(delimiter)) == delimiter do
-    rest = binary_part(string, byte_size(delimiter), byte_size(string) - 1)
-    do_split(rest, delimiter, <<>>, [part | accumulator])
-  end
+  defp do_split(string, delimiter, part, acc) do
+    size = byte_size(delimiter)
 
-  defp do_split(<<char, rest::binary>>, delimiter, part, accumulator) do
-    do_split(rest, delimiter, <<part::binary, char>>, accumulator)
+    case string do
+      <<^delimiter::binary-size(size), remaining::binary>> ->
+        do_split(remaining, delimiter, <<>>, [part | acc])
+
+      <<char, remaining::binary>> ->
+        do_split(remaining, delimiter, <<part::binary, char>>, acc)
+    end
   end
 end
 
