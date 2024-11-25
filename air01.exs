@@ -4,8 +4,6 @@ defmodule Exercice do
     do_split(string, pattern, <<>>, [])
   end
 
-  defguardp is_pattern_match(string, pattern)
-
   defp do_split(<<>>, _pattern, part, accumulator) do
     Enum.reverse([part | accumulator])
   end
