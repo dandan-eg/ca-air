@@ -5,12 +5,15 @@ defmodule Exercice do
   end
 
   def find_unique_with_memo([head | tail], memo) do
-    with nil <- memo[head],
-         true <- unique?(head, tail) do
-      head
-    else
-      :seen -> find_unique_with_memo(tail, memo)
-      _ -> find_unique_with_memo(tail, Map.put(memo, head, :seen))
+    cond do
+      memo[head] ->
+        find_unique(tail, memo)
+
+      not unique?(head) ->
+        find_unique(tail, MapSet.put(memo, head))
+
+      true ->
+        head
     end
   end
 
