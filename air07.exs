@@ -35,16 +35,20 @@ defmodule Exercice do
     do_insert(numbers, to_insert, [])
   end
 
-  def do_insert([], _, acc), do: Enum.reverse(acc)
+  # [1 2 4], 3, []
+  # [2 4], 3, [1]
+  # [4], 3, [2, 1]
+  # [], :inserted, [4, 3, 2, 1]
+  def do_insert([], :inserted, acc), do: Enum.reverse(acc)
+  def do_insert([], to_insert, acc), do: Enum.reverse([to_insert | acc])
   def do_insert([head | tail], :inserted, acc), do: do_insert(tail, :inserted, [head | acc])
 
   def do_insert([head | tail], to_insert, acc)
       when head < to_insert,
       do: do_insert(tail, to_insert, [head | acc])
 
-  def do_insert([head | tail], to_insert, acc) do
-    do_insert(tail, :inserted, [head, to_insert | acc])
-  end
+  def do_insert([head | tail], to_insert, acc),
+    do: do_insert(tail, :inserted, [head, to_insert | acc])
 end
 
 System.argv()
