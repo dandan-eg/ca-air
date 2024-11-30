@@ -2,10 +2,10 @@
 defmodule Exercice do
   def run do
     System.argv()
-    |> split_arg([])
+    |> split_args([])
     |> case do
       :error ->
-          IO.puts("usage: elixir <numbers..> fusion <numbers..>")
+        IO.puts("usage: elixir <numbers..> fusion <numbers..>")
 
       {:ok, [], _second} ->
         IO.puts("missing arguments before 'fusion'")
@@ -59,9 +59,9 @@ defmodule Exercice do
   end
 
 
-  def split_arg(["fusion" | tail], acc), do: {:ok, Enum.reverse(acc), tail}
-  def split_arg([arg | tail], acc), do: split_arg(tail, [arg | acc])
-  def split_arg([], _acc), do: :error
+  def split_args(["fusion" | tail], acc), do: {:ok, Enum.reverse(acc), tail}
+  def split_args([arg | tail], acc), do: split_args(tail, [arg | acc])
+  def split_args([], _acc), do: :error
 
   def merge(first_list, second_list) do
     do_merge(first_list, second_list, [])
@@ -72,15 +72,14 @@ defmodule Exercice do
   defp do_merge([], [head | tail], acc), do: do_merge(tail, [], [head | acc])
   defp do_merge([], [], acc), do: Enum.reverse(acc)
 
-  defp do_merge(
-    [first_head | first_tail] = first_list, 
-    [second_head | second_tail] = second_list, 
-    acc
-  ) do
+  defp do_merge( first_numbers, second_numbers, acc) do
+    first_head = hd(first_numbers)
+    second_head = hd(second_numbers)
+
     if first_head < second_head do
-      do_merge(first_tail, second_list, [first_head | acc])
+      do_merge(tl(first_numbers), second_numbers, [first_head | acc])
     else
-      do_merge(first_list, second_tail, [second_head | acc])
+      do_merge(first_numbers, tl(second_numbers), [second_head | acc])
     end
   end
 
