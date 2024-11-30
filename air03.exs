@@ -17,19 +17,21 @@ defmodule Exercice do
   end
 
   defp do_concat([], _delimiter, acc), do: acc
-end
 
-case System.argv() do
-  [] ->
-    IO.puts("usage: elixir air03.exs <args..> <delemiter>")
+  def run do
+    case System.argv() do
+      [] ->
+        IO.puts("usage: elixir air03.exs <args..> <delemiter>")
 
-  [_] ->
-    IO.puts("usage: elixir air03.exs <args..> <delemiter>")
+      [_] ->
+        IO.puts("usage: elixir air03.exs <args..> <delemiter>")
 
-  args ->
-    {delimiter, list} = List.pop_at(args, -1)
+      args ->
+        {delimiter, list} = List.pop_at(args, -1)
 
-    list
-    |> Exercice.concat(delimiter)
-    |> IO.inspect()
+        list
+        |> Exercice.concat(delimiter)
+        |> IO.inspect()
+    end
+  end
 end

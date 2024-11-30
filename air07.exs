@@ -43,28 +43,31 @@ defmodule Exercice do
   def do_insert([], to_insert, acc), do: Enum.reverse([to_insert | acc])
   def do_insert([head | tail], :inserted, acc), do: do_insert(tail, :inserted, [head | acc])
 
-  def do_insert([head | tail], to_insert, acc)
-      when head < to_insert,
-      do: do_insert(tail, to_insert, [head | acc])
+  def do_insert([head | tail], to_insert, acc) when head < to_insert,
+    do: do_insert(tail, to_insert, [head | acc])
 
   def do_insert([head | tail], to_insert, acc),
     do: do_insert(tail, :inserted, [head, to_insert | acc])
+
+  def run do
+    System.argv()
+    |> Exercice.parse_args()
+    |> case do
+      {:ok, numbers, to_insert} ->
+        numbers
+        |> Exercice.insert(to_insert)
+        |> IO.inspect()
+
+      {:error, {:nan, arg}} ->
+        IO.puts("#{arg} is not a valid number")
+
+      {:error, :nonsorted} ->
+        IO.puts("please provide sorted numbers")
+
+      {:error, :bad_args} ->
+        IO.puts("usage: elixir eau07.exs <number1> <number2> ..")
+    end
+  end
 end
 
-System.argv()
-|> Exercice.parse_args()
-|> case do
-  {:ok, numbers, to_insert} ->
-    numbers
-    |> Exercice.insert(to_insert)
-    |> IO.inspect()
-
-  {:error, {:nan, arg}} ->
-    IO.puts("#{arg} is not a valid number")
-
-  {:error, :nonsorted} ->
-    IO.puts("please provide sorted numbers")
-
-  {:error, :bad_args} ->
-    IO.puts("usage: elixir eau07.exs <number1> <number2> ..")
-end
+Exercice.run()

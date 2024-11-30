@@ -32,19 +32,23 @@ defmodule Exercice do
       <<_, remaining::binary>> -> contain?(remaining, discrimiant)
     end
   end
+
+  def run do
+    System.argv()
+    |> Exercice.parse_args()
+    |> case do
+      {:ok, strings, discriminant} ->
+        strings
+        |> Exercice.filter_containing(discriminant)
+        |> IO.inspect()
+
+      {:error, :bad_args} ->
+        IO.puts("usage: elixir <string1> <string2> <string[...]")
+
+      {:error, {:nan, arg}} ->
+        IO.puts("\"#{arg}\" is not a number")
+    end
+  end
 end
 
-System.argv()
-|> Exercice.parse_args()
-|> case do
-  {:ok, strings, discriminant} ->
-    strings
-    |> Exercice.filter_containing(discriminant)
-    |> IO.inspect()
-
-  {:error, :bad_args} ->
-    IO.puts("usage: elixir <string1> <string2> <string[...]")
-
-  {:error, {:nan, arg}} ->
-    IO.puts("\"#{arg}\" is not a number")
-end
+Exercice.run()

@@ -17,19 +17,23 @@ defmodule Exercice do
       :error -> {:error, {:nan, arg}}
     end
   end
+
+  def run do
+    System.argv()
+    |> Exercice.parse_args()
+    |> case do
+      {:ok, mapper, numbers} ->
+        numbers
+        |> Enum.map(&(&1 + mapper))
+        |> IO.inspect()
+
+      {:error, {:nan, arg}} ->
+        IO.puts("#{arg} is not a valid number")
+
+      {:error, :bad_args} ->
+        IO.puts("usage: elixir eau05.exs <numbers..> <apply>")
+    end
+  end
 end
 
-System.argv()
-|> Exercice.parse_args()
-|> case do
-  {:ok, mapper, numbers} ->
-    numbers
-    |> Enum.map(&(&1 + mapper))
-    |> IO.inspect()
-
-  {:error, {:nan, arg}} ->
-    IO.puts("#{arg} is not a valid number")
-
-  {:error, :bad_args} ->
-    IO.puts("usage: elixir eau05.exs <numbers..> <apply>")
-end
+Exercice.run()

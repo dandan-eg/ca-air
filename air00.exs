@@ -21,14 +21,18 @@ defmodule Exercice do
   defp do_split(<<>>, word, acc) do
     Enum.reverse([word | acc])
   end
+
+  def run do
+    case System.argv() do
+      [string] ->
+        string
+        |> Exercice.split()
+        |> IO.inspect()
+
+      _bad_args ->
+        IO.puts("Usage: elixir air00.exs <sentence>")
+    end
+  end
 end
 
-case System.argv() do
-  [string] ->
-    string
-    |> Exercice.split()
-    |> IO.inspect()
-
-  _bad_args ->
-    IO.puts("Usage: elixir air00.exs <sentence>")
-end
+Exercice.run()

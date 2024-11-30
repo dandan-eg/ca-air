@@ -25,14 +25,16 @@ defmodule Exercice do
 
   def display_result(nil), do: IO.puts("Aucun intrus")
   def display_result(found), do: IO.puts("l'intrus est #{found}")
-end
 
-case System.argv() do
-  [] ->
-    IO.puts("usage: elixir air02.exs <args..>")
+  def run do
+    case System.argv() do
+      [] ->
+        IO.puts("usage: elixir air02.exs <args..>")
 
-  args ->
-    args
-    |> Exercice.find_unique()
-    |> Exercice.display_result()
+      args ->
+        args
+        |> Exercice.find_unique()
+        |> Exercice.display_result()
+    end
+  end
 end

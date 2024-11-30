@@ -18,14 +18,16 @@ defmodule Exercice do
   defp do_remove_duplicate_adjacent(current, <<>>, acc) do
     <<acc::binary, current>>
   end
-end
 
-case System.argv() do
-  [string] ->
-    string
-    |> Exercice.remove_duplicate_ajdacent()
-    |> IO.puts()
+  def run do
+    case System.argv() do
+      [string] ->
+        string
+        |> Exercice.remove_duplicate_ajdacent()
+        |> IO.puts()
 
-  _bad_args ->
-    IO.puts("usage: elixir air04.exs <string>")
+      _bad_args ->
+        IO.puts("usage: elixir air04.exs <string>")
+    end
+  end
 end
