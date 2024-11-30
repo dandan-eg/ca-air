@@ -82,7 +82,6 @@ defmodule Exercice do
       do_merge(first_numbers, tl(second_numbers), [second_head | acc])
     end
   end
-
 end
 
 Exercice.run()
