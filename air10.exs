@@ -7,8 +7,17 @@ defmodule Exercice do
       {:ok, letter, heigth} ->
         draw_pyramid(letter, heigth)
 
-      {:error, reason} ->
-        IO.puts(reason)
+      {:error, :bad_args} ->
+        IO.puts("Usage elixir air10.exs <letter> <heigth>")
+
+      {:error, :not_letter} ->
+        IO.puts("Please provide a valid letter")
+
+      {:error, :not_number} ->
+        IO.puts("Please provide a number for the heigth")
+
+      {:error, :invalid_heigth} ->
+        IO.puts("Heigth must be higher than 0")
     end
   end
 
@@ -41,19 +50,21 @@ defmodule Exercice do
           | {:error, :bad_args}
           | {:error, :not_number}
           | {:error, :not_letter}
+          | {:error, :invalid_heigth}
 
   def validate_args([letter, maybe_number]) do
     with :ok <- validate_letter(letter),
-         {:ok, heigth} <- validate_number(maybe_number) do
+         {:ok, heigth} <- validate_heigth(maybe_number) do
       {:ok, letter, heigth}
     end
   end
 
   def validate_args(_args), do: {:error, :bad_args}
 
-  defp validate_number(arg) do
+  defp validate_heigth(arg) do
     case Integer.parse(arg) do
-      {num, _rest} -> {:ok, num}
+      {heigth, _rest} when heigth > 0 -> {:ok, heigth}
+      {_heigth, _rest} -> {:error, :invalid_heigth}
       :error -> {:error, :not_number}
     end
   end
