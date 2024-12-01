@@ -1,3 +1,4 @@
+# Split en fonction
 defmodule Exercice do
   def split(string, delimiter) do
     do_split(string, delimiter, <<>>, [])
