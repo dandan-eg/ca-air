@@ -10,6 +10,7 @@ defmodule Exercice do
 
       _args ->
         IO.puts("usage: Elixir")
+        System.halt(1)
     end
   end
 end
