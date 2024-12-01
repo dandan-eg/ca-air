@@ -6,12 +6,15 @@ defmodule Exercice do
     |> case do
       :error ->
         IO.puts("usage: elixir <numbers..> fusion <numbers..>")
+        System.stop(1)
 
       {:ok, [], _second} ->
         IO.puts("missing arguments before 'fusion'")
+        System.stop(1)
 
       {:ok, _first, []} ->
         IO.puts("missing arguments after 'fusion'")
+        System.stop(1)
 
       {:ok, first, second} ->
         with {:ok, first_numbers} <- parse_args(first),
