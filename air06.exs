@@ -1,3 +1,4 @@
+# String dans string
 defmodule Exercice do
   def parse_args([]), do: {:error, :bad_args}
   def parse_args([_arg]), do: {:error, :bad_args}
