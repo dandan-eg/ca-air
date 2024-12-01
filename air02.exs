@@ -30,7 +30,7 @@ defmodule Exercice do
     case System.argv() do
       [] ->
         IO.puts("usage: elixir air02.exs <args..>")
-        System.stop(1)
+        System.halt(1)
 
       args ->
         args

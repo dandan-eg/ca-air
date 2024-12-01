@@ -1,3 +1,4 @@
+# Insertion dans tableau trié
 defmodule Exercice do
   def parse_args([]), do: {:error, :bad_args}
 
@@ -60,12 +61,15 @@ defmodule Exercice do
 
       {:error, {:nan, arg}} ->
         IO.puts("#{arg} is not a valid number")
+        System.halt(1)
 
       {:error, :nonsorted} ->
         IO.puts("please provide sorted numbers")
+        System.halt(1)
 
       {:error, :bad_args} ->
         IO.puts("usage: elixir eau07.exs <number1> <number2> ..")
+        System.halt(1)
     end
   end
 end

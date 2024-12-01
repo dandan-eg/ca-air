@@ -29,9 +29,11 @@ defmodule Exercice do
 
       {:error, {:nan, arg}} ->
         IO.puts("#{arg} is not a valid number")
+        System.halt(1)
 
       {:error, :bad_args} ->
         IO.puts("usage: elixir eau05.exs <numbers..> <apply>")
+        System.halt(1)
     end
   end
 end

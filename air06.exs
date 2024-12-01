@@ -45,9 +45,11 @@ defmodule Exercice do
 
       {:error, :bad_args} ->
         IO.puts("usage: elixir <string1> <string2> <string[...]")
+        System.halt(1)
 
       {:error, {:nan, arg}} ->
         IO.puts("\"#{arg}\" is not a number")
+        System.halt(1)
     end
   end
 end

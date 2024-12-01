@@ -29,6 +29,7 @@ defmodule Exercice do
 
       _bad_args ->
         IO.puts("Usage: elixir air00.exs <sentence>")
+        System.halt(1)
     end
   end
 end

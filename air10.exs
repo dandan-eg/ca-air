@@ -9,15 +9,19 @@ defmodule Exercice do
 
       {:error, :bad_args} ->
         IO.puts("Usage elixir air10.exs <letter> <heigth>")
+        System.halt(1)
 
       {:error, :not_letter} ->
         IO.puts("Please provide a valid letter")
+        System.halt(1)
 
       {:error, :not_number} ->
         IO.puts("Please provide a number for the heigth")
+        System.halt(1)
 
       {:error, :invalid_heigth} ->
         IO.puts("Heigth must be higher than 0")
+        System.halt(1)
     end
   end
 
