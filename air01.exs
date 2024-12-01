@@ -21,9 +21,9 @@ defmodule Exercice do
 
   def run do
     case System.argv() do
-      [string] ->
+      [string, delemiter] ->
         string
-        |> Exercice.split()
+        |> Exercice.split(delemiter)
         |> IO.inspect()
 
       _bad_args ->

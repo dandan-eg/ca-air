@@ -35,3 +35,5 @@ defmodule Exercice do
     end
   end
 end
+
+Exercice.run()

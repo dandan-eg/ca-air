@@ -1,16 +1,16 @@
 # Chercher l'intrus
 defmodule Exercice do
   def find_unique(list) do
-    find_unique_with_memo(list, %{})
+    find_unique_with_memo(list, MapSet.new())
   end
 
   def find_unique_with_memo([head | tail], memo) do
     cond do
-      memo[head] ->
-        find_unique(tail, memo)
+      MapSet.member?(memo, head) ->
+        find_unique_with_memo(tail, memo)
 
-      not unique?(head) ->
-        find_unique(tail, MapSet.put(memo, head))
+      not unique?(head, tail) ->
+        find_unique_with_memo(tail, MapSet.put(memo, head))
 
       true ->
         head
@@ -23,13 +23,14 @@ defmodule Exercice do
   def unique?(_target, []), do: true
   def unique?(target, [_ | tail]), do: unique?(target, tail)
 
-  def display_result(nil), do: IO.puts("Aucun intrus")
-  def display_result(found), do: IO.puts("l'intrus est #{found}")
+  def display_result(nil), do: IO.inspect("Aucun intrus")
+  def display_result(found), do: IO.inspect("l'intrus est #{found}")
 
   def run do
     case System.argv() do
       [] ->
         IO.puts("usage: elixir air02.exs <args..>")
+        System.stop(1)
 
       args ->
         args
@@ -38,3 +39,5 @@ defmodule Exercice do
     end
   end
 end
+
+Exercice.run()
