@@ -4,6 +4,7 @@ defmodule Exercice do
     case System.argv() do
       [] ->
         IO.puts("usage: elixir eau09.exs <args..>")
+        System.halt(1)
 
       args ->
         args
