@@ -22,19 +22,23 @@ defmodule Exercice do
   def puts_green(message),
     do: "#{IO.ANSI.green()}#{message}#{IO.ANSI.reset()}" |> IO.puts()
 
-  def execute_file(filename, args) do
+  def execute_file(index, length, filename, args) do
     case System.cmd("elixir", [filename | args]) do
       {result, 0} ->
-        puts_green("#{filename} OK: #{result}")
+        puts_green("(#{filename}) #{index}/#{length} OK: #{result}")
 
       {_, bad_exit} ->
-        puts_red("#{filename} with #{inspect(args)} returned #{bad_exit}")
+        puts_red("(#{filename}) #{index}/#{length} with #{inspect(args)} returned #{bad_exit}")
     end
   end
 end
 
 Enum.each(scripts, fn {filename, args_set} ->
-  Enum.each(args_set, fn args ->
-    Exercice.execute_file(filename, args)
+  length = length(args_set)
+
+  args_set
+  |> Enum.with_index(1)
+  |> Enum.each(fn {args, index} ->
+    Exercice.execute_file(index, length, filename, args)
   end)
 end)
