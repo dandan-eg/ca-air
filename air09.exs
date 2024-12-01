@@ -1,4 +1,4 @@
-# Afficher le contenu
+# Rotation vers la gauche
 defmodule Exercice do
   def run do
     case System.argv() do
