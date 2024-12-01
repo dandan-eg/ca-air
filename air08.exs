@@ -6,15 +6,15 @@ defmodule Exercice do
     |> case do
       :error ->
         IO.puts("usage: elixir <numbers..> fusion <numbers..>")
-        System.stop(1)
+        System.halt(1)
 
       {:ok, [], _second} ->
         IO.puts("missing arguments before 'fusion'")
-        System.stop(1)
+        System.halt(1)
 
       {:ok, _first, []} ->
         IO.puts("missing arguments after 'fusion'")
-        System.stop(1)
+        System.halt(1)
 
       {:ok, first, second} ->
         with {:ok, first_numbers} <- parse_args(first),
@@ -25,9 +25,11 @@ defmodule Exercice do
         else
           {:error, :not_sorted} ->
             IO.puts("provide sorted numbers")
+            System.halt(1)
 
           {:error, {:nan, invalid_arg}} ->
             IO.puts("'#{invalid_arg}' is not a valid number.")
+            System.halt(1)
         end
     end
   end
