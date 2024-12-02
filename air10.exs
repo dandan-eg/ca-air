@@ -11,7 +11,7 @@ defmodule Exercice do
         IO.puts("Usage elixir air10.exs <letter> <heigth>")
         System.halt(1)
 
-      {:error, :not_letter} ->
+      {:error, :not_char} ->
         IO.puts("Please provide a valid letter")
         System.halt(1)
 
@@ -27,39 +27,37 @@ defmodule Exercice do
 
   def draw_pyramid(letter, heigth) do
     width = heigth * 2 - 1
-    do_draw_pyramid(letter, width, heigth, 0)
+    do_draw_pyramid(letter, width, heigth, heigth)
   end
 
-  def do_draw_pyramid(_letter, _width, heigth, heigth), do: :ok
+  def do_draw_pyramid(_letter, _width, _heigth, 0), do: :ok
 
   def do_draw_pyramid(letter, width, heigth, floor) do
-    start = heigth - floor
-    limit = heigth + floor
+    start = floor
+    limit = width - floor + 1
 
-    1..width
-    |> Enum.map(fn
-      i when i >= start and i <= limit ->
-        letter
+    to_display =
+      Enum.map(1..width, fn
+        i when i >= start and i <= limit -> letter
+        _i -> " "
+      end)
 
-      _i ->
-        " "
-    end)
-    |> IO.puts()
+    IO.puts(to_display)
 
-    do_draw_pyramid(letter, width, heigth, floor + 1)
+    do_draw_pyramid(letter, width, heigth, floor - 1)
   end
 
   @spec validate_args(list(String.t())) ::
           {:ok, String.t(), integer()}
           | {:error, :bad_args}
           | {:error, :not_number}
-          | {:error, :not_letter}
+          | {:error, :not_char}
           | {:error, :invalid_heigth}
 
-  def validate_args([letter, maybe_number]) do
-    with :ok <- validate_letter(letter),
+  def validate_args([maybe_char, maybe_number]) do
+    with {:ok, char} <- validate_char(maybe_char),
          {:ok, heigth} <- validate_heigth(maybe_number) do
-      {:ok, letter, heigth}
+      {:ok, char, heigth}
     end
   end
 
@@ -73,11 +71,8 @@ defmodule Exercice do
     end
   end
 
-  defp validate_letter(arg) do
-    if byte_size(arg) === 1,
-      do: :ok,
-      else: {:error, :not_letter}
-  end
+  defp validate_char(<<char::utf8>>), do: {:ok, char}
+  defp validate_char(_), do: {:error, :not_char}
 end
 
 Exercice.run()

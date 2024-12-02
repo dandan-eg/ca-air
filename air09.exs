@@ -14,6 +14,7 @@ defmodule Exercice do
   end
 
   def rotate([]), do: []
+  def rotate([head] = list), do: list
 
   def rotate([head | tail]) do
     append(tail, head, [])
